@@ -1,5 +1,6 @@
 import torch
 import json
+import numpy as np
 
 def load_cube_data(cube_size, cube_type, device):
     """Load cube data based on cube size and type (qtm or all)."""
@@ -33,6 +34,18 @@ def state2hash(states, hash_vec, batch_size=2**14):
         batch_hash = torch.sum(hash_vec * batch, dim=1)
         result[i * batch_size:(i + 1) * batch_size] = batch_hash
     return result
+
+def int_to_human(number):
+    """Convert integer to human-readable format."""
+    if number < 1000:
+        return str(number)
+    elif number < 1_000_000:
+        return f"{np.round(number / 1_000, 3)}K"
+    elif number < 1_000_000_000:
+        return f"{np.round(number / 1_000_000, 3)}M"
+    else:
+        return f"{np.round(number / 1_000_000_000, 3)}B"
+
 
 # def get_unique_states(states, states_bad_hashed, hash_vec, batch_size=2**14):
 #     """Filter unique states by removing duplicates based on hash."""

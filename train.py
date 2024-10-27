@@ -3,7 +3,7 @@ import torch
 import os
 import json
 from pilgrim import Trainer, Pilgrim
-from pilgrim import count_parameters, generate_inverse_moves, load_cube_data
+from pilgrim import count_parameters, generate_inverse_moves, load_cube_data, int_to_human
 
 def main():
     # Set up argument parser
@@ -75,10 +75,12 @@ def main():
 
     # Calculate the number of model parameters
     num_parameters = count_parameters(model)
-    param_million = round(num_parameters / 1_000_000)  # Get the number of parameters in millions
+    
+    # Get the number of parameters for human i.e K, M
+    human_paramteres = int_to_human(num_parameters)
 
     # Create the training name based on mode, hidden layers, residual blocks, and number of parameters
-    name = f"cube{args.cube_size}_{args.cube_type}_{mode}_{param_million:02d}M"
+    name = f"cube{args.cube_size}_{args.cube_type}_{mode}_{human_paramteres}"
     
     # Create the trainer
     trainer = Trainer(
@@ -112,7 +114,7 @@ def main():
     print(f"Model Mode: {mode}")
     print(f"Model Name: {name}")
     print(f'Model id: {trainer.id}')
-    print(f"Model has {num_parameters} parameters")
+    print(f"Model has {human_paramteres} parameters")
 
     # Start the training process
     trainer.run()

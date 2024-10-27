@@ -153,3 +153,10 @@ python test.py --cube_size 4 --cube_type all --weights weights/cube4_all_MLP2_01
 
 If you find this project helpful or interesting, please consider giving it a ⭐. It helps others discover the project and motivates to keep improving it. Thank you for your support!
 
+## 6 Cube 
+
+* 13M params
+
+```bash
+python train.py --cube_size 6 --cube_type all --K_max 48 --hd1 2048 --hd2 1024 --nrd 4 --epochs 256
+```
